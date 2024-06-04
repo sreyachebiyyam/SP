@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Your Number</title>
+</head>
+<body>
+    <h1>Enter Your Number</h1>
+    <form id="numberForm">
+        <label for="number">Number:</label>
+        <input type="number" id="number" name="number" required>
+        <button type="submit">Send</button>
+    </form>
+
+    <script>
+        document.getElementById('numberForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const number = document.getElementById('number').value;
+
+            fetch('https://your-backend-url.com/send', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ number })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Number sent successfully!');
+                } else {
+                    alert('Error sending number.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error sending number.');
+            });
+        });
+    </script>
+</body>
+</html>
